@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package com.example.springbootkotlindemo.grpc;
+
+option java_multiple_files = true;
+option java_package = "com.example.springbootkotlindemo.grpc";
+option java_outer_classname = "EmployeeProto";
+
+// Employee message representing an employee entity
+message EmployeeMessage {
+  int64 id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string email = 4;
+  string department = 5;
+}
+
+// Request message for creating an employee
+message CreateEmployeeRequest {
+  string first_name = 1;
+  string last_name = 2;
+  string email = 3;
+  string department = 4;
+}
+
+// Request message for getting an employee by ID
+message GetEmployeeRequest {
+  int64 id = 1;
+}
+
+// Request message for getting all employees
+message GetAllEmployeesRequest {
+}
+
+// Response message for getting all employees
+message GetAllEmployeesResponse {
+  repeated EmployeeMessage employees = 1;
+}
+
+// Request message for updating an employee
+message UpdateEmployeeRequest {
+  int64 id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string email = 4;
+  string department = 5;
+}
+
+// Request message for deleting an employee
+message DeleteEmployeeRequest {
+  int64 id = 1;
+}
+
+// Response message for delete operation
+message DeleteEmployeeResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// Employee gRPC service with CRUD operations
+service EmployeeGrpcService {
+  // Create a new employee
+  rpc CreateEmployee(CreateEmployeeRequest) returns (EmployeeMessage);
+  
+  // Get an employee by ID
+  rpc GetEmployee(GetEmployeeRequest) returns (EmployeeMessage);
+  
+  // Get all employees
+  rpc GetAllEmployees(GetAllEmployeesRequest) returns (GetAllEmployeesResponse);
+  
+  // Update an existing employee
+  rpc UpdateEmployee(UpdateEmployeeRequest) returns (EmployeeMessage);
+  
+  // Delete an employee
+  rpc DeleteEmployee(DeleteEmployeeRequest) returns (DeleteEmployeeResponse);
+}
